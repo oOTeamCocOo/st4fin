@@ -92,3 +92,17 @@ client.on('message', msg => {
       .addField("Je suis sur "+ servercount + " serveurs "," Merci de votre fidèlité", false)
     msg.channel.send(infos_embed)
 });
+
+client.on("message", message => {
+    if (!message.guild) return
+    let args = message.content.trim().split(/ +/g)
+ 
+    if (args[0].toLowerCase() === prefix + "clear") {
+        if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send("Bah nan... C'est pas encore aujourd'hui que tu vas utilisé cette commande !!")
+        let count = args[1]
+        if (!count) return message.channel.send(" Tu as cru que j'allais deviner combien de message tu veux supprimer ? Indique un nombre patate.")
+        if (isNaN(count)) return message.channel.send("Tu vas, m'écrire un VRAI nombre ? ")
+        if (count < 1 || count > 5000) return message.channel.send("Veuillez indiquer un nombre entre 1 et 5000")
+        message.channel.bulkDelete(parseInt(count) + 1)
+    }
+});
